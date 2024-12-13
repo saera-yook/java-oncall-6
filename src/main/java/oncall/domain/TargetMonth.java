@@ -18,16 +18,17 @@ public class TargetMonth {
     private static final Map<Integer, List<Integer>> holidays = new HashMap<>();
 
     private final int month;
-    private final String startDay;
+    private final String startKoreanDay;
     private final int endDay;
     private final List<String> days;
     private final List<String> names;
 
-    public TargetMonth(final int month, final String startDay) {
+    public TargetMonth(final int month, final String startKoreanDay) {
         initializeHolidays();
         validateMonth(month);
         this.month = month;
-        this.startDay = startDay;
+        validateDay(startKoreanDay);
+        this.startKoreanDay = startKoreanDay;
         this.endDay = setEndDay(this.month);
         this.days = setDays(this.month);
         names = new ArrayList<>();
@@ -57,7 +58,7 @@ public class TargetMonth {
     }
 
     private List<String> setDays(int month) {
-        int startInt = koreanDays.indexOf(startDay) + 1;
+        int startInt = koreanDays.indexOf(startKoreanDay) + 1;
         if (holidays.containsKey(month)) {
             return setHolidayDays(month, startInt);
         }
@@ -151,6 +152,12 @@ public class TargetMonth {
 
     private static void validateMonth(int inputMonth) {
         if (inputMonth < 1 || inputMonth > 12) {
+            throw new InvalidMonthOrDayException();
+        }
+    }
+
+    private static void validateDay(String inputDay) {
+        if (!koreanDays.contains(inputDay)) {
             throw new InvalidMonthOrDayException();
         }
     }
