@@ -43,11 +43,15 @@ public class OncallController {
     }
 
     private void validateAllWorkers(List<String> normalOrder, List<String> holidayOrder) {
-        if (normalOrder.size() != holidayOrder.size()) {
+        if (normalOrder.size() != holidayOrder.size() || !isInRange(normalOrder.size())) {
             throw new InvalidOrderException();
         }
         if (!new HashSet<>(normalOrder).containsAll(holidayOrder)) {
             throw new InvalidOrderException();
         }
+    }
+
+    private boolean isInRange(int value) {
+        return value >= 5 && value <= 35;
     }
 }
