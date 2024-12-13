@@ -26,7 +26,6 @@ public class TargetMonth {
         this.startDay = startDay;
         this.endDay = setEndDay(month);
         this.days = setDays(month);
-        System.out.println(days);
     }
 
     private void initializeHolidays() {
@@ -90,5 +89,24 @@ public class TargetMonth {
             days.add(day);
         }
         return days;
+    }
+
+    public List<String> assignDutyOrder(LinkedList<String> normalOrder, LinkedList<String> holidayOrder) {
+        List<String> result = new ArrayList<>();
+        for (String day : days) {
+            result.add(getWorker(day, normalOrder, holidayOrder));
+        }
+        return result;
+    }
+
+    private String getWorker(String day, LinkedList<String> normalOrder, LinkedList<String> holidayOrder) {
+        if (day.contains("토") || day.contains("일") || day.contains("휴일")) {
+            String name = holidayOrder.removeFirst();
+            holidayOrder.add(name);
+            return name;
+        }
+        String name = normalOrder.removeFirst();
+        normalOrder.add(name);
+        return name;
     }
 }

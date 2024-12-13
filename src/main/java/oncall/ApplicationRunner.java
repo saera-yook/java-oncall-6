@@ -1,5 +1,6 @@
 package oncall;
 
+import java.util.LinkedList;
 import java.util.List;
 import oncall.domain.TargetMonth;
 import oncall.view.InputView;
@@ -10,5 +11,7 @@ public class ApplicationRunner {
         TargetMonth targetMonth = new TargetMonth(Integer.parseInt(monthAndDay.get(0)), monthAndDay.get(1));
         List<String> normalOrderNames = InputView.readNormalOrder();
         List<String> holidayOrderNames = InputView.readHolidayOrder();
+        List<String> assignedWorkers = targetMonth.assignDutyOrder(new LinkedList<>(normalOrderNames), new LinkedList<>(holidayOrderNames));
+        System.out.println(assignedWorkers);
     }
 }
