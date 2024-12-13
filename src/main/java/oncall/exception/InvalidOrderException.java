@@ -2,8 +2,8 @@ package oncall.exception;
 
 import static oncall.exception.ExceptionConstants.ERROR_INVALID;
 
-public class InvalidMonthOrDayException extends UserIllegalArgumentException {
-    public InvalidMonthOrDayException() {
+public class InvalidOrderException extends UserIllegalArgumentException {
+    public InvalidOrderException() {
         super(ERROR_INVALID);
     }
 }
