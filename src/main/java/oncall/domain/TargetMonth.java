@@ -20,12 +20,19 @@ public class TargetMonth {
     private final int endDay;
     private final List<String> days;
 
+    public List<String> getNames() {
+        return names;
+    }
+
+    private final List<String> names;
+
     public TargetMonth(final int month, final String startDay) {
         initializeHolidays();
         this.month = month;
         this.startDay = startDay;
         this.endDay = setEndDay(month);
         this.days = setDays(month);
+        names = new ArrayList<>();
     }
 
     private void initializeHolidays() {
@@ -91,22 +98,40 @@ public class TargetMonth {
         return days;
     }
 
-    public List<String> assignDutyOrder(LinkedList<String> normalOrder, LinkedList<String> holidayOrder) {
-        List<String> result = new ArrayList<>();
+    public void assignDutyOrder(LinkedList<String> normalOrder, LinkedList<String> holidayOrder) {
         for (String day : days) {
-            result.add(getWorker(day, normalOrder, holidayOrder));
+            String assignedWorker = getWorker(day, normalOrder, holidayOrder);
+
+            names.add(assignedWorker);
         }
-        return result;
     }
 
     private String getWorker(String day, LinkedList<String> normalOrder, LinkedList<String> holidayOrder) {
         if (day.contains("토") || day.contains("일") || day.contains("휴일")) {
-            String name = holidayOrder.removeFirst();
-            holidayOrder.add(name);
-            return name;
+            String worker = holidayOrder.removeFirst();
+            if (isWorkedYesterday(worker)) {
+                String nextWorker = holidayOrder.removeFirst();
+                holidayOrder.addFirst(worker);
+                holidayOrder.add(worker);
+                holidayOrder.add(nextWorker);
+                return nextWorker;
+            }
+            holidayOrder.add(worker);
+            return worker;
         }
-        String name = normalOrder.removeFirst();
-        normalOrder.add(name);
-        return name;
+        String worker = normalOrder.removeFirst();
+        if (isWorkedYesterday(worker)) {
+            String nextWorker = normalOrder.removeFirst();
+            normalOrder.addFirst(worker);
+            normalOrder.add(worker);
+            normalOrder.add(nextWorker);
+            return nextWorker;
+        }
+        normalOrder.add(worker);
+        return worker;
+    }
+
+    private boolean isWorkedYesterday(String name) {
+        return names.getLast().equals(name);
     }
 }

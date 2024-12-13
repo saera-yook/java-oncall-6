@@ -11,7 +11,7 @@ public class ApplicationRunner {
         TargetMonth targetMonth = new TargetMonth(Integer.parseInt(monthAndDay.get(0)), monthAndDay.get(1));
         List<String> normalOrderNames = InputView.readNormalOrder();
         List<String> holidayOrderNames = InputView.readHolidayOrder();
-        List<String> assignedWorkers = targetMonth.assignDutyOrder(new LinkedList<>(normalOrderNames), new LinkedList<>(holidayOrderNames));
+        List<String> assignedWorkers = targetMonth.getNames();
         System.out.println(assignedWorkers);
     }
 }
