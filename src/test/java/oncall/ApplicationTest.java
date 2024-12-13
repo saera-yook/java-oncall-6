@@ -4,7 +4,6 @@ import static camp.nextstep.edu.missionutils.test.Assertions.assertSimpleTest;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import camp.nextstep.edu.missionutils.test.NsTest;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 class ApplicationTest extends NsTest {
@@ -55,7 +54,7 @@ class ApplicationTest extends NsTest {
     }
 
     @Test
-    void 출력_테스트() {
+    void 예시_출력_테스트() {
         assertSimpleTest(() -> {
             run("5,월", "준팍,도밥,고니,수아,루루,글로,솔로스타,우코,슬링키,참새,도리", "수아,루루,글로,솔로스타,우코,슬링키,참새,도리,준팍,도밥,고니");
             assertThat(output()).isEqualTo(
@@ -98,7 +97,7 @@ class ApplicationTest extends NsTest {
     }
 
     @Test
-    void 예외_테스트7() {
+    void 근무자_수_35_초과_예외_테스트() {
         assertSimpleTest(() -> {
             run("4,토",
                     "허브,쥬니,말랑,라온,헤나,우코,에단,수달,파워,히이로,마코,슬링키,모디,연어,깃짱,리오,고니,박스터,달리,조이,노아이즈,도이,도치,홍고,스캇,폴로,해시,로지,첵스,아이크,우가,푸만능,애쉬,로이스,오션,포비",
@@ -118,7 +117,7 @@ class ApplicationTest extends NsTest {
     }
 
     @Test
-    void 예외_테스트6() {
+    void 근무자_수_5_미만_예외_테스트() {
         assertSimpleTest(() -> {
             run("4,토",
                     "허브,쥬니,말랑,라온",
@@ -138,7 +137,7 @@ class ApplicationTest extends NsTest {
     }
 
     @Test
-    void 예외_테스트5() {
+    void 평일_휴일_근무자_불일치_예외_테스트() {
         assertSimpleTest(() -> {
             run("4,토",
                     "허브,쥬니,말랑,라온,오션",
@@ -158,7 +157,7 @@ class ApplicationTest extends NsTest {
     }
 
     @Test
-    void 예외_테스트4() {
+    void 근무자_이름_중복_예외_테스트() {
         assertSimpleTest(() -> {
             run("4,토",
                     "허브,허브,말랑,라온,헤나",
@@ -178,7 +177,7 @@ class ApplicationTest extends NsTest {
     }
 
     @Test
-    void 예외_테스트3() {
+    void 근무자_이름_길이_예외_테스트() {
         assertSimpleTest(() -> {
             run("4,토",
                     "허브허브허브,말랑,라온,헤나,쥬니",
@@ -198,7 +197,7 @@ class ApplicationTest extends NsTest {
     }
 
     @Test
-    void 예외_테스트2() {
+    void 요일_예외_테스트() {
         assertSimpleTest(() -> {
             run("12,구",
                     "4,토",
