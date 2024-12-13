@@ -13,7 +13,7 @@ import java.util.Map;
 public class TargetMonth {
     private static final List<String> koreanDays = Arrays.stream(DayOfWeek.values())
             .map(d -> d.getDisplayName(TextStyle.SHORT, Locale.KOREAN)).toList();
-    private static final Map<Integer, Integer> holidays = new HashMap<>();
+    private static final Map<Integer, List<Integer>> holidays = new HashMap<>();
 
     private final int month;
     private final String startDay;
@@ -30,20 +30,19 @@ public class TargetMonth {
         initializeHolidays();
         this.month = month;
         this.startDay = startDay;
-        this.endDay = setEndDay(month);
-        this.days = setDays(month);
+        this.endDay = setEndDay(this.month);
+        this.days = setDays(this.month);
         names = new ArrayList<>();
     }
 
     private void initializeHolidays() {
-        holidays.put(1, 1);
-        holidays.put(3, 1);
-        holidays.put(5, 5);
-        holidays.put(6, 6);
-        holidays.put(8, 15);
-        holidays.put(10, 3);
-        holidays.put(10, 9);
-        holidays.put(12, 25);
+        holidays.put(1, List.of(1));
+        holidays.put(3, List.of(1));
+        holidays.put(5, List.of(5));
+        holidays.put(6, List.of(6));
+        holidays.put(8, List.of(15));
+        holidays.put(10, List.of(3, 9));
+        holidays.put(12, List.of(25));
     }
 
     private int setEndDay(int month) {
@@ -90,7 +89,7 @@ public class TargetMonth {
         for (int i = 0; i < endDay; i++) {
             String day = daysQueue.removeFirst();
             daysQueue.add(day);
-            if (i + 1 == holidays.get(month)) {
+            if (holidays.get(month).contains(i + 1)) {
                 day = day.concat("(휴일)");
             }
             days.add(day);

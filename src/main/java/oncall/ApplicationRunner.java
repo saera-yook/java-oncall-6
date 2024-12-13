@@ -1,6 +1,5 @@
 package oncall;
 
-import java.util.LinkedList;
 import java.util.List;
 import oncall.domain.TargetMonth;
 import oncall.view.InputView;
