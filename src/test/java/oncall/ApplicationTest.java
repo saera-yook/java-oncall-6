@@ -4,7 +4,6 @@ import static camp.nextstep.edu.missionutils.test.Assertions.assertSimpleTest;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import camp.nextstep.edu.missionutils.test.NsTest;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 class ApplicationTest extends NsTest {
@@ -17,10 +16,7 @@ class ApplicationTest extends NsTest {
             run("5,월", "준팍,도밥,고니,수아,루루,글로,솔로스타,우코,슬링키,참새,도리", "수아,루루,글로,솔로스타,우코,슬링키,참새,도리,준팍,도밥,고니");
             assertThat(output()).isEqualTo(
                     """
-                    비상 근무를 배정할 월과 시작 요일을 입력하세요>\s
-                    평일 비상 근무 순번대로 사원 닉네임을 입력하세요>\s
-                    휴일 비상 근무 순번대로 사원 닉네임을 입력하세요>\s
-                    
+                    비상 근무를 배정할 월과 시작 요일을 입력하세요>\s평일 비상 근무 순번대로 사원 닉네임을 입력하세요>\s휴일 비상 근무 순번대로 사원 닉네임을 입력하세요>\s
                     5월 1일 월 준팍
                     5월 2일 화 도밥
                     5월 3일 수 고니
@@ -57,7 +53,6 @@ class ApplicationTest extends NsTest {
         });
     }
 
-    @Disabled
     @Test
     void 예외_테스트() {
         assertSimpleTest(() -> {
@@ -77,7 +72,6 @@ class ApplicationTest extends NsTest {
         });
     }
 
-    @Disabled
     @Test
     void 기능_테스트() {
         assertSimpleTest(() -> {

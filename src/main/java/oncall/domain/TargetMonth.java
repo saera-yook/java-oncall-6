@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.stream.Collectors;
+import oncall.exception.InvalidMonthOrDayException;
 
 public class TargetMonth {
     private static final List<String> koreanDays = Arrays.stream(DayOfWeek.values())
@@ -22,12 +23,9 @@ public class TargetMonth {
     private final List<String> days;
     private final List<String> names;
 
-    public List<String> getNames() {
-        return names;
-    }
-
     public TargetMonth(final int month, final String startDay) {
         initializeHolidays();
+        validateMonth(month);
         this.month = month;
         this.startDay = startDay;
         this.endDay = setEndDay(this.month);
@@ -70,6 +68,9 @@ public class TargetMonth {
         List<String> days = new ArrayList<>();
         List<String> daysQueue = new LinkedList<>();
         for (int i = 0; i < 7; i++) {
+            if (startInt + i > 7) {
+                startInt -= 7;
+            }
             daysQueue.add(DayOfWeek.of(startInt + i).getDisplayName(TextStyle.SHORT, Locale.KOREAN));
         }
         for (int i = 0; i < endDay; i++) {
@@ -146,5 +147,11 @@ public class TargetMonth {
             monthlyText.add(String.format("%d월 %d일 %s ", month, i, days.get(i - 1)));
         }
         return monthlyText;
+    }
+
+    private static void validateMonth(int inputMonth) {
+        if (inputMonth < 1 || inputMonth > 12) {
+            throw new InvalidMonthOrDayException();
+        }
     }
 }
