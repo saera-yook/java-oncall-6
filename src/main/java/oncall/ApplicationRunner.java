@@ -15,6 +15,4 @@ public class ApplicationRunner {
         targetMonth.assignDutyOrder(new LinkedList<>(normalOrderNames), new LinkedList<>(holidayOrderNames));
         System.out.println(targetMonth.makeDutyResult());
     }
-
-
 }

@@ -4,11 +4,55 @@ import static camp.nextstep.edu.missionutils.test.Assertions.assertSimpleTest;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import camp.nextstep.edu.missionutils.test.NsTest;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 class ApplicationTest extends NsTest {
 
     private static final String LINE_SEPARATOR = System.lineSeparator();
+
+    @Test
+    void 휴일_10월_테스트() {
+        assertSimpleTest(() -> {
+            run("10,월", "준팍,도밥,고니,수아,루루,글로,솔로스타,우코,슬링키,참새,도리", "수아,루루,글로,솔로스타,우코,슬링키,참새,도리,준팍,도밥,고니");
+            assertThat(output()).isEqualTo(
+                    """
+                    비상 근무를 배정할 월과 시작 요일을 입력하세요>\s평일 비상 근무 순번대로 사원 닉네임을 입력하세요>\s휴일 비상 근무 순번대로 사원 닉네임을 입력하세요>\s
+                    10월 1일 월 준팍
+                    10월 2일 화 도밥
+                    10월 3일 수(휴일) 수아
+                    10월 4일 목 고니
+                    10월 5일 금 수아
+                    10월 6일 토 루루
+                    10월 7일 일 글로
+                    10월 8일 월 루루
+                    10월 9일 화(휴일) 솔로스타
+                    10월 10일 수 글로
+                    10월 11일 목 솔로스타
+                    10월 12일 금 우코
+                    10월 13일 토 슬링키
+                    10월 14일 일 우코
+                    10월 15일 월 슬링키
+                    10월 16일 화 참새
+                    10월 17일 수 도리
+                    10월 18일 목 준팍
+                    10월 19일 금 도밥
+                    10월 20일 토 참새
+                    10월 21일 일 도리
+                    10월 22일 월 고니
+                    10월 23일 화 수아
+                    10월 24일 수 루루
+                    10월 25일 목 글로
+                    10월 26일 금 솔로스타
+                    10월 27일 토 준팍
+                    10월 28일 일 도밥
+                    10월 29일 월 우코
+                    10월 30일 화 슬링키
+                    10월 31일 수 참새
+                    """.trim()
+            );
+        });
+    }
 
     @Test
     void 출력_테스트() {

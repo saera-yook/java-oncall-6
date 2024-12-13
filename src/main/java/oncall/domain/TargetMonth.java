@@ -91,7 +91,7 @@ public class TargetMonth {
         for (int i = 0; i < endDay; i++) {
             String day = daysQueue.removeFirst();
             daysQueue.add(day);
-            if (holidays.get(month).contains(i + 1)) {
+            if (holidays.get(month).contains(i + 1) && !day.equals("토") && !day.equals("일")) {
                 day = day.concat("(휴일)");
             }
             days.add(day);
@@ -107,26 +107,21 @@ public class TargetMonth {
 
     private String getWorker(String day, LinkedList<String> normalOrder, LinkedList<String> holidayOrder) {
         if (day.contains("토") || day.contains("일") || day.contains("휴일")) {
-            String worker = holidayOrder.removeFirst();
-            if (isWorkedYesterday(worker)) {
-                String nextWorker = holidayOrder.removeFirst();
-                holidayOrder.addFirst(worker);
-                holidayOrder.add(worker);
-                holidayOrder.add(nextWorker);
-                return nextWorker;
-            }
-            holidayOrder.add(worker);
-            return worker;
+            return getWorkerFrom(holidayOrder);
         }
-        String worker = normalOrder.removeFirst();
+        return getWorkerFrom(normalOrder);
+    }
+
+    private String getWorkerFrom(LinkedList<String> order) {
+        String worker = order.removeFirst();
         if (isWorkedYesterday(worker)) {
-            String nextWorker = normalOrder.removeFirst();
-            normalOrder.addFirst(worker);
-            normalOrder.add(worker);
-            normalOrder.add(nextWorker);
+            String nextWorker = order.removeFirst();
+            order.addFirst(worker);
+            order.add(worker);
+            order.add(nextWorker);
             return nextWorker;
         }
-        normalOrder.add(worker);
+        order.add(worker);
         return worker;
     }
 
