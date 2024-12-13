@@ -9,6 +9,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class TargetMonth {
     private static final List<String> koreanDays = Arrays.stream(DayOfWeek.values())
@@ -19,12 +20,11 @@ public class TargetMonth {
     private final String startDay;
     private final int endDay;
     private final List<String> days;
+    private final List<String> names;
 
     public List<String> getNames() {
         return names;
     }
-
-    private final List<String> names;
 
     public TargetMonth(final int month, final String startDay) {
         initializeHolidays();
@@ -99,9 +99,7 @@ public class TargetMonth {
 
     public void assignDutyOrder(LinkedList<String> normalOrder, LinkedList<String> holidayOrder) {
         for (String day : days) {
-            String assignedWorker = getWorker(day, normalOrder, holidayOrder);
-
-            names.add(assignedWorker);
+            names.add(getWorker(day, normalOrder, holidayOrder));
         }
     }
 
@@ -131,6 +129,22 @@ public class TargetMonth {
     }
 
     private boolean isWorkedYesterday(String name) {
+        if (names.isEmpty()) {
+            return false;
+        }
         return names.getLast().equals(name);
+    }
+
+    public String makeDutyResult() {
+        List<String> monthlyText = makeMonthlyText();
+        return monthlyText.stream().map(s -> s.concat(names.get(monthlyText.indexOf(s)))).collect(Collectors.joining("\n"));
+    }
+
+    private List<String> makeMonthlyText() {
+        List<String> monthlyText = new LinkedList<>();
+        for (int i = 1; i <= endDay; i++) {
+            monthlyText.add(String.format("%d월 %d일 %s ", month, i, days.get(i - 1)));
+        }
+        return monthlyText;
     }
 }
